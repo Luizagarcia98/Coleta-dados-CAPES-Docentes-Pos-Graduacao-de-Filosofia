@@ -1,0 +1,197 @@
+##DADOS CAPES DOCENTES##
+
+library(tidyverse)
+library (readxl)
+library (writexl)
+library(scales)
+library(magrittr)
+library(rvest)
+library(readr)
+library(data.table)
+library(curl)
+library(httr)
+library(dplyr)
+
+##COLETA DE DADOS##
+
+#Selecionar colunas de interesse (2004 - 2012)
+colunas_selecionadas_2014_2012 <- c("AN_BASE", "SG_ENTIDADE_ENSINO", "NM_PROGRAMA_IES",
+                          "NM_DOCENTE", "DS_CATEGORIA_DOCENTE",
+                          "DS_TIPO_NATUR_VINCULO_DOCENTE", "AN_INICIO_VINCULO_DOCENTE",
+                          "NM_IES_TIT_MAX_DOCENTE")
+
+#2004 - 2012
+url2004_2012 <- "https://dadosabertos.capes.gov.br/dataset/2e0031f0-6e67-4d31-92c0-dd500c411d6b/resource/3a5e21a5-9c96-44ae-b11e-ce079aa988cf/download/br-capes-colsucup-docente-2004a2012-2021-03-01.csv"
+
+dados2004_2012 <- fread(cmd = paste('curl -s', shQuote(url2004_2012), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                        select = colunas_selecionadas_2014_2012,
+                        encoding = "Latin-1")
+
+dados2004_2012 <- dados2004_2012[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#Selecionar colunas de interesse (2013 - 2024)
+colunas_selecionadas_2013_2024 <- c("AN_BASE", "SG_ENTIDADE_ENSINO", "NM_PROGRAMA_IES",
+                                    "NM_DOCENTE", "DS_CATEGORIA_DOCENTE",
+                                    "DS_TIPO_VINCULO_DOCENTE_IES", "NM_IES_TITULACAO")
+
+#2013
+url2013 <- "https://dadosabertos.capes.gov.br/dataset/35eab2f8-5a64-4619-b3f1-63a2e6690cfa/resource/72582076-d83f-4427-95f8-94247eb5dfda/download/br-capes-colsucup-docente-2013-2023-08-01.csv"
+
+dados2013 <- fread(cmd = paste('curl -s', shQuote(url2013), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                        select = colunas_selecionadas_2013_2024,
+                        encoding = "Latin-1")
+
+dados2013 <- dados2013[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+
+#2014
+url2014 <- "https://dadosabertos.capes.gov.br/dataset/35eab2f8-5a64-4619-b3f1-63a2e6690cfa/resource/3adbdc71-dbfa-4186-a975-31d59ebc5735/download/br-capes-colsucup-docente-2014-2023-08-01.csv"
+
+dados2014 <- fread(cmd = paste('curl -s', shQuote(url2013), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2014 <- dados2014[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2015
+url2015 <- "https://dadosabertos.capes.gov.br/dataset/35eab2f8-5a64-4619-b3f1-63a2e6690cfa/resource/750d1748-218d-4cc8-a435-06a9c882bc74/download/br-capes-colsucup-docente-2015-2023-08-01.csv"
+
+dados2015 <- fread(cmd = paste('curl -s', shQuote(url2015), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2015 <- dados2015[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2016
+url2016 <- "https://dadosabertos.capes.gov.br/dataset/35eab2f8-5a64-4619-b3f1-63a2e6690cfa/resource/f3328f37-e1b5-47da-bc01-ae88a5d3a68c/download/br-capes-colsucup-docente-2016-2023-08-01.csv"
+
+dados2016 <- fread(cmd = paste('curl -s', shQuote(url2016), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2016 <- dados2016[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2017
+url2017 <- "https://dadosabertos.capes.gov.br/dataset/57f86b23-e751-4834-8537-e9d33bd608b6/resource/89662c04-3451-45cd-b2e8-ae430bc6e00f/download/br-capes-colsucup-docente-2017-2021-11-10.csv"
+
+dados2017 <- fread(cmd = paste('curl -s', shQuote(url2017), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2017 <- dados2017[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2018
+url2018 <- "https://dadosabertos.capes.gov.br/dataset/57f86b23-e751-4834-8537-e9d33bd608b6/resource/7777b5e7-3754-4d9f-83a7-bab568edee93/download/br-capes-colsucup-docente-2018-2021-11-10.csv"
+
+dados2018 <- fread(cmd = paste('curl -s', shQuote(url2018), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2018 <- dados2018[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2019
+url2019 <- "https://dadosabertos.capes.gov.br/dataset/57f86b23-e751-4834-8537-e9d33bd608b6/resource/57469ecf-c018-4ed1-b68e-06cec87599a8/download/br-capes-colsucup-docente-2019-2021-11-10.csv"
+
+dados2019 <- fread(cmd = paste('curl -s', shQuote(url2019), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2019 <- dados2019[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2020
+url2020 <- "https://dadosabertos.capes.gov.br/dataset/57f86b23-e751-4834-8537-e9d33bd608b6/resource/72ab509c-4ca8-452c-9768-b591194f96e1/download/br-capes-colsucup-docente-2020-2021-11-10.csv"
+
+dados2020 <- fread(cmd = paste('curl -s', shQuote(url2020), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2020 <- dados2020[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2021
+url2021 <- "https://dadosabertos.capes.gov.br/dataset/0be9cfba-56e8-4da1-b3cc-0a05412eba3d/resource/cb95cea4-e4a8-4249-a58c-bc14d57f9889/download/br-capes-colsucup-docente-2021-2025-03-31.csv"
+
+dados2021 <- fread(cmd = paste('curl -s', shQuote(url2021), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2021 <- dados2021[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2022
+url2022 <- "https://dadosabertos.capes.gov.br/dataset/0be9cfba-56e8-4da1-b3cc-0a05412eba3d/resource/644b4e6a-f158-4bb7-9287-a5cd786989d7/download/br-capes-colsucup-docente-2022-2025-03-31.csv"
+
+dados2022 <- fread(cmd = paste('curl -s', shQuote(url2022), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2022 <- dados2022[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2023
+url2023 <- "https://dadosabertos.capes.gov.br/dataset/0be9cfba-56e8-4da1-b3cc-0a05412eba3d/resource/c4481fda-3e65-4dcc-9222-6b0c3d64daa7/download/br-capes-colsucup-docente-2023-2025-03-31.csv"
+
+dados2023 <- fread(cmd = paste('curl -s', shQuote(url2023), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2023 <- dados2023[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#2024
+url2024 <- "https://dadosabertos.capes.gov.br/dataset/0be9cfba-56e8-4da1-b3cc-0a05412eba3d/resource/4b256d1c-9448-4598-bf1d-9d8d8df633de/download/br-capes-colsucup-docente-2024-2025-12-01.csv"
+
+dados2024 <- fread(cmd = paste('curl -s', shQuote(url2024), '| grep -E "USP.*FILOSOFIA|SG_ENTIDADE_ENSINO"'),
+                   select = colunas_selecionadas_2013_2024,
+                   encoding = "Latin-1")
+
+dados2024 <- dados2024[SG_ENTIDADE_ENSINO == "USP" & NM_PROGRAMA_IES == "FILOSOFIA"]
+
+#Remover urls
+rm(url2004_2012, url2013, url2014, url2015, url2016, url2017, url2018, url2019, url2020, url2021, url2022, url2023, url2024)
+rm(colunas_selecionadas_2004_2012, colunas_selecionadas_2013_202)
+
+
+##PADRONIZACAO DOS DADOS CAPES DOCENTES##
+
+#Alteracao de nome de colunas
+dados2004_2012 <- dados2004_2012 %>%
+  rename(DS_TIPO_VINCULO_DOCENTE_IES = DS_TIPO_NATUR_VINCULO_DOCENTE,
+         NM_IES_TITULACAO = NM_IES_TIT_MAX_DOCENTE)
+
+#Criar a coluna AN_INICIO_VINCULO_DOCENTE
+dados2013 <- dados2013 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2014 <- dados2014 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2015 <- dados2015 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2016 <- dados2016 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2017 <- dados2017 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2018 <- dados2018 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2019 <- dados2019 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2020 <- dados2020 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2021 <- dados2021 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2022 <- dados2022 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2023 <- dados2023 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+dados2024 <- dados2024 %>% mutate(AN_INICIO_VINCULO_DOCENTE = NA_integer_)
+
+#Reunir em uma unica tabela
+Docentes <- bind_rows(dados2004_2012, dados2013, dados2014,
+                      dados2015, dados2016, dados2017, dados2018,
+                      dados2019, dados2020, dados2021,dados2022,
+                      dados2023, dados2024)
+
+#Remover professores visitantes
+Docentes <- Docentes %>%
+  filter(DS_CATEGORIA_DOCENTE == "PERMANENTE" | DS_CATEGORIA_DOCENTE == "COLABORADOR")
+
+#Preencher AN_INICIO_VINCULO_DOCENTE com NA
+Docentes <- Docentes %>%
+  # Ordenar por nome
+  arrange(NM_DOCENTE, AN_BASE) %>%
+  # Agrupar por nome para preencher os dados de cada pessoa
+  group_by(NM_DOCENTE) %>%
+  # Preencher NA's com o valor anterior do mesmo grupo (para mês e ano)
+  fill(AN_INICIO_VINCULO_DOCENTE, .direction = "down") %>%
+  # Remover o agrupamento
+  ungroup()
+
+#Deixar apenas uma linha por docente
+unique_docentes <- Docentes %>%
+  group_by(NM_DOCENTE) %>%
+  filter(row_number() == n()) %>%
+  ungroup()
