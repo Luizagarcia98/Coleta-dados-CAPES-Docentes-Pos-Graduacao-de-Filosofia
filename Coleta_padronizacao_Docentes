@@ -195,3 +195,17 @@ unique_docentes <- Docentes %>%
   group_by(NM_DOCENTE) %>%
   filter(row_number() == n()) %>%
   ungroup()
+
+#Atribuindo genero pelo nome
+install.packages("genderBR")
+library(genderBR)
+
+unique_docentes$GENERO <- get_gender(unique_docentes$NM_DOCENTE)
+#Mudar para portugues
+unique_docente <- unique_docente %>%
+  mutate(GENERO = recode(GENERO,
+                         "Male" = "HOMEM",
+                         "Female" = "MULHER"))
+
+#Salvando planilha
+write_xlsx(unique_docente, "Docentes.xlsx")
